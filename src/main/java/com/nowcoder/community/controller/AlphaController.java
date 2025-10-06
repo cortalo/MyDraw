@@ -14,4 +14,10 @@ public class AlphaController {
         return "Hello Spring Boot.";
     }
 
+    @RequestMapping("/hello2")
+    @ResponseBody
+    public String sayHello2() {
+        return "Hello2 Spring Boot.";
+    }
+
 }
