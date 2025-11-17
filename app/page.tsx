@@ -7,6 +7,7 @@ export default function DrawPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [points, setPoints] = useState<number[][]>([]);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
 
   const getSvgPathFromStroke = (stroke: number[][]) => {
     if (!stroke.length) return "";
@@ -37,6 +38,19 @@ export default function DrawPage() {
   };
 
   useEffect(() => {
+    const updateDimensions = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -56,8 +70,8 @@ export default function DrawPage() {
   return (
     <canvas
       ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
+      width={dimensions.width}
+      height={dimensions.height}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
