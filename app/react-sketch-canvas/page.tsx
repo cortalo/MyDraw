@@ -34,7 +34,7 @@ export default function DrawPage() {
 
         <input
           type="color"
-          onChange={(e) =>
+          onChange={() =>
             canvasRef.current?.exportPaths().then(() => {
               canvasRef.current?.resetCanvas();
             })
